@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        function getComputerChoice() {
+            let valueChoice;
+            let getRandomNumber = Math.floor((Math.random() * 3));
+            switch (true) {
+                case getRandomNumber === 0:
+                        valueChoice = "Rock";
+                        break;
+                case getRandomNumber === 1:
+                        valueChoice = "Scissors";
+                        break;
+                case getRandomNumber === 2:
+                        valueChoice = "Paper";
+                        break;
+                default:
+                        valueChoice = "Something went wrong";
+                        break; 
+            }
+            return valueChoice;
+        }
+
+        let playerWins = 0;
+        let computerWins = 0;
+        
+        function playRound(playerSelection, computerSelection) {
+            playersAnswer = playerSelection.trim().slice(0,1).toUpperCase() + playerSelection.trim().slice(1).toLowerCase();
+            let Winner;
+            switch (true) {
+                case playersAnswer === "Rock" && computerSelection === "Scissors" || playersAnswer === "Scissors" && computerSelection === "Paper" || playersAnswer === "Paper" && computerSelection === "Rock":
+                    Winner = "Player wins! Computer loses";
+                    playerWins++
+                    break;
+                case playersAnswer === "Rock" && computerSelection === "Paper" || playersAnswer === "Scissors" && computerSelection === "Rock" || playersAnswer === "Paper" && computerSelection === "Scissors":
+                    Winner = "Computer wins! Player loses";
+                    computerWins++
+                    break;
+                case playersAnswer === "Rock" && computerSelection === "Rock" || playersAnswer === "Paper" && computerSelection === "Paper" || playersAnswer === "Scissors" && computerSelection === "Scissors":
+                    Winner = "It's a tie!";
+                    break;
+                default: 
+                    Winner = "Something went wrong";
+                    break;
+            }
+
+            return Winner;
+        }
+
+        function game() {
+            let numberOfMoreWins;
+            for (let i = 1; i < 6; i++) {
+                playerSelection = prompt(`Round number ${i}: Pick either rock, paper, or scissors`);
+                let computerSelection = getComputerChoice();
+                console.log(playRound(playerSelection, computerSelection));
+            }
+
+            if (playerWins > computerWins) {
+                numberOfMoreWins = playerWins - computerWins;
+                console.log(`In the end, the player was the winner with ${numberOfMoreWins} more wins than the computer!`);
+            } else if (playerWins < computerWins) {
+                numberOfMoreWins = computerWins - playerWins;
+                console.log(`In the end, the computer was the winner with ${numberOfMoreWins} more wins than the player!`);
+            } else {
+                console.log(`In the end it's a tie with both the computer and player getting ${playerWins} wins`);
+            }
+
+        }
+        game();
+    </script>
+</body>
+</html>
