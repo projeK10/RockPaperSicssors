@@ -4,10 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>RockPaperScissorsGame</title>
 </head>
 <body>
     <script>
+        let playerWins = 0;
+        let computerWins = 0;
+        let playerPlay
+        let letsPlayAgain = false;
+        wantToPlay();
+
+        function wantToPlay() {
+            playerPlay = prompt(`Would you like to play rock paper scissors?`, "Yes");
+            playerPlay = playerPlay.trim().slice(0,1).toUpperCase() + playerPlay.trim().slice(1).toLowerCase();
+            if (playerPlay === "Yes") {
+                game()
+            } else {
+                alert("Ok, if you change your mind reload the page to play");
+            }
+        }
 
         function getComputerChoice() {
             let valueChoice;
@@ -29,9 +44,6 @@
             return valueChoice;
         }
 
-        let playerWins = 0;
-        let computerWins = 0;
-        
         function playRound(playerSelection, computerSelection) {
             playersAnswer = playerSelection.trim().slice(0,1).toUpperCase() + playerSelection.trim().slice(1).toLowerCase();
             let Winner;
@@ -54,27 +66,46 @@
 
             return Winner;
         }
-
         function game() {
+            let pleaseRun = false;
             let numberOfMoreWins;
-            for (let i = 1; i < 6; i++) {
-                playerSelection = prompt(`Round number ${i}: Pick either rock, paper, or scissors`);
-                let computerSelection = getComputerChoice();
-                console.log(playRound(playerSelection, computerSelection));
+                for (let i = 1; i < 6; i++) {
+                playerSelection = prompt(`Round number ${i}: Pick either rock, paper, or scissors`, "rock");
+                playerSelection = playerSelection.trim().slice(0,1).toUpperCase() + playerSelection.trim().slice(1).toLowerCase();
+                if (playerSelection === "Rock" || playerSelection === "Paper" || playerSelection === "Scissors") {
+                    let computerSelection = getComputerChoice();
+                    alert(playRound(playerSelection, computerSelection));
+                    if (i === 5) {
+                        pleaseRun = true;
+                    }
+                } else {
+                alert("Please type in either rock, paper or scissors.");
+                i--
+                }
             }
 
-            if (playerWins > computerWins) {
+            if (pleaseRun === true) {
+                if (playerWins > computerWins) {
                 numberOfMoreWins = playerWins - computerWins;
-                console.log(`In the end, the player was the winner with ${numberOfMoreWins} more wins than the computer!`);
-            } else if (playerWins < computerWins) {
-                numberOfMoreWins = computerWins - playerWins;
-                console.log(`In the end, the computer was the winner with ${numberOfMoreWins} more wins than the player!`);
-            } else {
-                console.log(`In the end it's a tie with both the computer and player getting ${playerWins} wins`);
+                alert(`In the end, the player is the winner with ${numberOfMoreWins} more wins than the computer. Press "Ok" to play again!`);
+                letsPlayAgain = true
+                } else if (playerWins < computerWins) {
+                    numberOfMoreWins = computerWins - playerWins;
+                    alert(`In the end, the computer is the winner with ${numberOfMoreWins} more wins than the player. Press "Ok" to play again!`);
+                    letsPlayAgain = true
+                } else if (playerWins === computerWins && playerWins !== 1 && computerWins !== 1) {
+                    alert(`In the end it's a tie with both the computer and player getting ${playerWins} wins. Press "Ok" to play again!`);
+                    letsPlayAgain = true
+                } else {
+                    alert(`In the end it's a tie with both the computer and player getting ${playerWins} win. Press "Ok" to play again!`);
+                    letsPlayAgain = true
+                }
             }
-
+            if (letsPlayAgain === true) {
+            game();
+            }
         }
-        game();
+
     </script>
 </body>
 </html>
